@@ -37,6 +37,9 @@ public class BinarySearchTree {
         if(node != null)
             System.out.println("min value found :: "+node.value);
 
+        node = delete(root,32);
+        System.out.println("Node deleted");
+
     }
 
     public static Node insert(Node root,int value){
@@ -128,5 +131,55 @@ public class BinarySearchTree {
          return prev;
        }
 
+
+       public static Node delete(Node root,int value){
+
+          if (root == null){
+              return root;
+          }
+
+          Node current = root;
+          Node prev = null;
+          while(current != null){
+
+              if(current.value == value){
+                  break;
+              } else if(current.value < value){
+                  prev = current;
+                  current = current.right;
+              } else if(current.value > value){
+                  prev = current;
+                  current = current.left;
+              }
+
+          }
+
+         /* if node is a child node */
+          if(current.left == null && current.right == null){
+              if(prev.value < value){
+                  prev.right = null;
+              } else if (prev.value > value){
+                  prev.left = null;
+              }
+          }
+
+          /* if a node has one child node */
+           Node child = null;
+          if(current.left == null && current.right != null) {
+                child = current.right;
+          } else if(current.left != null && current.right == null){
+              child = current.left;
+          }
+
+          if(prev.left == current){
+              prev.left = child;
+          } else if(prev.right == current){
+              prev.right = child;
+          }
+
+
+
+          return root;
+       }
 
 }
